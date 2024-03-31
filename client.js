@@ -1,14 +1,10 @@
 const path = require("path");
-const fetch = require("node-fetch");
+const request = require("request");
 const http = require("http");
 const https = require("https");
 const fs = require('fs').promises;
 const { existsSync } = require("fs");
-const httpAgent = new http.Agent({ keepAlive: true });
-const httpsAgent = new https.Agent({ keepAlive: true });
-const agent = (_parsedURL) => _parsedURL.protocol == "http:" ? httpAgent : httpsAgent;
 const CACHE_PATH = path.join(__dirname, "assets");
-const BASE_URL = "https://discord.com";
 
 const SCRIPTS_INDEX = [
 "0000f34484a7bf568d45b7591916b603.svg",
@@ -7761,15 +7757,57 @@ const print = (x, printover = true) => {
 	);
 };
 
+async function fetch1(url) {
+	return new Promise((resolve) => {
+		request.get(("http://discord.com/assets/"+url), (err, res, body) => {
+			if (err) {
+				print(`Unknown Error on http://discord.com/assets/${url}`, false);
+				resolve(fetch2(url));
+			} else if (res.statusCode !== 200) {
+				print(`${res.statusCode} on http://discord.com/assets/${url}`, false);
+				resolve(fetch2(url));
+			} else {
+				resolve(body);
+			}
+		});
+	});
+}
+
+async function fetch2(url) {
+	return new Promise((resolve) => {
+		request.get(("http://web.archive.org/web/0id_/http://discord.com/assets/"+url), (err, res, body) => {
+			if (err) {
+				print(`Unknown Error on http://web.archive.org/web/0id_/http://discord.com/assets/${url}`, false);
+				resolve(fetch3(url));
+			} else if (res.statusCode !== 200) {
+				print(`${res.statusCode} on http://web.archive.org/web/0id_/http://discord.com/assets/${url}`, false);
+				resolve(fetch3(url));
+			} else {
+				resolve(body);
+			}
+		});
+	});
+}
+
+async function fetch3(url) {
+	return new Promise((resolve) => {
+		request.get(("http://web.archive.org/web/0id_/http://discordapp.com/assets/"+url), (err, res, body) => {
+			if (err) {
+				print(`Unknown Error on http://web.archive.org/web/0id_/http://discordapp.com/assets/${url}`, false);
+				resolve("");
+			} else if (res.statusCode !== 200) {
+				print(`${res.statusCode} on http://web.archive.org/web/0id_/http://discordapp.com/assets/${url}`, false);
+				resolve("");
+			} else {
+				resolve(body);
+			}
+		});
+	});
+}
+
 const processFile = async (asset) => {
 	asset = `${asset}${asset.includes(".") ? "" : ".js"}`;
-	const url = `${BASE_URL}/assets/${asset}`;
-	const res = await fetch(url, { agent });
-	if (res.status !== 200) {
-		print(`${res.status} on ${asset}`, false);
-		return [];
-	}
-	let text = await res.text();
+	let text = await fetch1(asset);
 	await fs.writeFile(path.join(CACHE_PATH, asset), text);
 	let ret = new Set([
 		...(text.match(/"[A-Fa-f0-9]{20}"/g) || []),
