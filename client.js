@@ -7808,6 +7808,9 @@ async function fetch3(url) {
 const processFile = async (asset) => {
 	asset = `${asset}${asset.includes(".") ? "" : ".js"}`;
 	let text = await fetch1(asset);
+	if (text == "") {
+		return [];
+	}
 	await fs.writeFile(path.join(CACHE_PATH, asset), text);
 	let ret = new Set([
 		...(text.match(/"[A-Fa-f0-9]{20}"/g) || []),
