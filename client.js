@@ -180,7 +180,7 @@ const print = (x, printover = true) => {
 
 async function fetch1(url) {
 	return new Promise((resolve) => {
-		request.get(("https://discord.com/assets/"+url), (err, res, body) => {
+		request.get(("https://discord.com/assets/"+url), {timeout: 2022}, (err, res, body) => {
 			if (res && res.statusCode && res.statusCode == 200) {
 				resolve(body);
 			} else if (res && res.statusCode && res.statusCode !== 200) {
@@ -196,7 +196,7 @@ async function fetch1(url) {
 
 async function fetch2(url) {
 	return new Promise((resolve) => {
-		request.get(("https://web.archive.org/web/0id_/https://discord.com/assets/"+url), (err, res, body) => {
+		request.get(("https://web.archive.org/web/0id_/https://discord.com/assets/"+url), {timeout: 2022}, (err, res, body) => {
 			if (res && res.statusCode && res.statusCode == 200) {
 				resolve(body);
 			} else if (res && res.statusCode && res.statusCode !== 200) {
@@ -212,7 +212,7 @@ async function fetch2(url) {
 
 async function fetch3(url) {
 	return new Promise((resolve) => {
-		request.get(("https://web.archive.org/web/0id_/https://discordapp.com/assets/"+url), (err, res, body) => {
+		request.get(("https://web.archive.org/web/0id_/https://discordapp.com/assets/"+url), {timeout: 2022}, (err, res, body) => {
 			if (res && res.statusCode && res.statusCode == 200) {
 				resolve(body);
 			} else if (res && res.statusCode && res.statusCode !== 200) {
