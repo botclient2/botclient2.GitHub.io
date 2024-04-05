@@ -205,9 +205,6 @@ const processFile = async (asset) => {
 	if (!existsSync(CACHE_PATH)) {
 		await fs.mkdir(CACHE_PATH, { recursive: true });
 	}
-	if (!existsSync(CACHE_PATH+'/images')) {
-		await fs.mkdir(CACHE_PATH+'/images', { recursive: true });
-	}
 	const assets = new Set(INDEX_SCRIPTS);
 	let promises = [];
 	let index = 0;
