@@ -122,45 +122,6 @@ const INDEX_SCRIPTS = [
 
 // End FBC Devel
 
-// Begin SBC
-
-"images/favicon.ico",
-"shared.8a9d03170ec4492d235b.js",
-"49237.6e7c3a8bc9b2c4e2af6d.css",
-"99387.95f92b85cbae70815829.css",
-"app.1b18c30d4e63b926cc95.js",
-"24217.fbecbc1d6a974fbc777e.js",
-"62734.1842567f24c7a0ab79a3.js",
-"43455.8c79ce3e1753b38de4a4.js",
-"10586.3f509a5d474354a36c24.js",
-"64787.359c4aba4bf61ba67cc0.js",
-"2797.a012718ee3dfd4179128.js",
-"58661.cbedde580b7529f6272e.js",
-"17764.2aa7ee221234529f6e80.js",
-"84471.737ccb785af03d732d6f.js",
-"70397.226bb847204914e85d62.js",
-"97256.55a5561807746b35c4a1.js",
-"web.b67b33baa9ade280349b.js",
-"24217.fbecbc1d6a974fbc777e.js",
-"62734.1842567f24c7a0ab79a3.js",
-"43455.8c79ce3e1753b38de4a4.js",
-"84471.737ccb785af03d732d6f.js",
-"sentry.765b00e66783ff42fca1.js",
-
-// End SBC
-
-// Begin SBC Devel
-
-"532.b61e550ed506bdd52a0b.css",
-"847541504914fd33810e70a0ea73177e.ico",
-"4b357782daec4239711055c06af93881.png",
-"4b357782daec4239711055c06af93881.png",
-"8c6183202d1561068d67.js",
-"a9d60a77491727a9cc1a.js",
-"d36c5f4215d7a9ea40f3.js",
-
-// End SBC Devel
-
 // End CECL Changes
 
 ];
