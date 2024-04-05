@@ -1,7 +1,5 @@
 const path = require("path");
 const request = require("request");
-const http = require("http");
-const https = require("https");
 const fs = require('fs').promises;
 const { existsSync } = require("fs");
 const CACHE_PATH = path.join(__dirname, "assets");
@@ -217,10 +215,10 @@ async function fetch3(url) {
 				resolve(body);
 			} else if (res && res.statusCode && res.statusCode !== 200) {
 				print(`${res.statusCode} on https://web.archive.org/web/0id_/https://discordapp.com/assets/${url}`, false);
-				resolve("");
+				resolve(null);
 			} else {
 				print(`Unknown Error on https://web.archive.org/web/0id_/https://discordapp.com/assets/${url}`, false);
-				resolve("");
+				resolve(null);
 			}
 		});
 	});
@@ -229,12 +227,12 @@ async function fetch3(url) {
 const processFile = async (asset) => {
 	asset = `${asset}${asset.includes(".") ? "" : ".js"}`;
 	let text = await fetch1(asset);
-	if (text == "") {
+	if (text == null) {
 		return [];
 	}
 	await fs.writeFile(path.join(CACHE_PATH, asset), text);
 	let ret = new Set([
-		...(text.match(/(((([0-9]){5})(.*)((\.){1})(([A-Fa-f0-9]){20}))||((([A-Fa-f0-9]){20})))/g) || []),
+		...(text.match(/"[A-Fa-f0-9]{20}"/g) || []),
 		...[...text.matchAll(/\.exports=.\..\+"(.*?\..{0,5})"/g)].map((x) => x[1],),
 		...[...text.matchAll(/\/assets\/([a-zA-Z0-9]*?\.[a-z0-9]{0,5})/g)].map((x) => x[1],),
 	]);
@@ -254,7 +252,7 @@ const processFile = async (asset) => {
 	let index = 0;
 	for (let asset of assets) {
 		index += 1;
-		print(`Scraping asset: ${asset} Remaining: ${assets.size - index}`);
+		print(`Scraping Asset: ${asset} - Assets Remaining: ${assets.size - index}`);
 		promises.push(processFile(asset));
 		if (promises.length > 100 || index == assets.size) {
 			const values = await Promise.all(promises);
@@ -262,4 +260,5 @@ const processFile = async (asset) => {
 			values.flat().forEach((x) => assets.add(x));
 		}
 	}
+	print("Done Scraping Assets!", false);
 })();
