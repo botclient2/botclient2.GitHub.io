@@ -234,7 +234,7 @@ const processFile = async (asset) => {
 	}
 	await fs.writeFile(path.join(CACHE_PATH, asset), text);
 	let ret = new Set([
-		...(text.match(/"([0-9]{5}.+\.[A-Fa-f0-9]{20}||[A-Fa-f0-9]{20})"/g) || []),
+		...(text.match(/([0-9]{5}.*\.[A-Fa-f0-9]{20}||[A-Fa-f0-9]{20})/g) || []),
 		...[...text.matchAll(/\.exports=.\..\+"(.*?\..{0,5})"/g)].map((x) => x[1],),
 		...[...text.matchAll(/\/assets\/([a-zA-Z0-9]*?\.[a-z0-9]{0,5})/g)].map((x) => x[1],),
 	]);
