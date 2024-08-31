@@ -1,4 +1,4 @@
-var dbcloginurl = "chriseric1.github.io"
+var dbcloginurl = "botclient2.github.io"
 
 var extraInfoSpecRequest = ["blocking", "requestHeaders"];
 var extraInfoSpecResponse = ["blocking", "responseHeaders"];
@@ -18,8 +18,8 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
  		if (fir) if (!details.originUrl.includes(dbcloginurl)) return;
 
 		let header = details.requestHeaders.find((e) => e.name.toLowerCase() === "origin");
-		if (header) header.value = "https://discord.com";
-		else details.requestHeaders.push({ name: "Origin", value: "https://discord.com" });
+		if (header) header.value = "https://hummus.sys42.net";
+		else details.requestHeaders.push({ name: "Origin", value: "https://hummus.sys42.net" });
 
 		details.requestHeaders = details.requestHeaders.filter((x) => x.name.toLowerCase() !== "user-agent");
 
