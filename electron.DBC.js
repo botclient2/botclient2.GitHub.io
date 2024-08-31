@@ -1,4 +1,4 @@
-var dbcloginurl = "http://chriseric1.github.io/login"
+var dbcloginurl = "http://botclient2.github.io/login"
 
 var { app, BrowserWindow, systemPreferences } = require("electron");
 async function createWindow() {
@@ -21,7 +21,7 @@ async function createWindow() {
 	};
 	var { session } = win.webContents;
 	session.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
-		details.requestHeaders["origin"] = "https://discord.com";
+		details.requestHeaders["origin"] = "https://hummus.sys42.net";
 		delete details.requestHeaders["User-Agent"];
 		callback({ requestHeaders: details.requestHeaders });
 	});
